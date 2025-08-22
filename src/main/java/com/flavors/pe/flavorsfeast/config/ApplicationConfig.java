@@ -1,8 +1,6 @@
 package com.flavors.pe.flavorsfeast.config;
 
-import com.flavors.pe.flavorsfeast.repositories.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.flavors.pe.flavorsfeast.repositories.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,11 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
 public class ApplicationConfig {
 
-    @Autowired
-    private final UsuarioRepository usuarioRepository;
+    private final UserRepository userRepository;
+
+    public ApplicationConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -41,7 +41,7 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> usuarioRepository.findByCorreo(username)
+        return username -> userRepository.findByEmailUser(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
