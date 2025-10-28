@@ -1,0 +1,31 @@
+server:
+  port: 8051
+  servlet:
+    context-path: /flavorsfeastpe/api/v2.1
+
+spring:
+  application:
+    name: flavorsfeast
+  datasource:
+    url: jdbc:mysql://localhost:3306/bd_flavors_feast
+    username: root
+    password: ${DB_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret:
+    key: ${SECRET_KEY}
+  time:
+    expiration: 5400000
+  access:
+    token:
+      cookie-name: jwtToken
+
